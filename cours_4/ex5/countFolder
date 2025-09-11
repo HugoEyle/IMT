@@ -1,0 +1,18 @@
+#!/bin/bash
+
+find_directories () {
+	file=$1
+	cdirec=$(ls -l $file 2>/dev/null | grep "^d" | wc -l 2>/dev/null)
+	echo $file:$cdirec
+	if [ $cdirec -ne 0 ]; then
+		echo $file
+		for nfile in $(ls -l $file/* | grep "^d"); do
+			find_directories $nfile
+		done ;
+	fi ;
+}
+
+for f in $(ls -d $1/*);
+do
+	find_directories $f
+done ;

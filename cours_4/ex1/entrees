@@ -1,0 +1,5 @@
+#!/bin/bash
+
+str=$*
+length=${#str}
+echo $str:$length >> lesentrees

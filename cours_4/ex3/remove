@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$1" = "-f" ]; then
+	rm -rf $2
+	exit 0;
+fi
+
+if [ "$1" = "-r" ]; then
+	mv /tmp/trash/$2 .
+	exit 0;
+fi
+
+mkdir -p /tmp/trash
+cp -r $1 /tmp/trash
+rm -rf $1
+
+

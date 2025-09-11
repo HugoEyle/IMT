@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if test $1 = "-f" ; then
+	echo "" > /tmp/.brain
+fi ;
+
+
+if test $1 = "-a" ; then
+	echo $(date +"%y%m%d"):$2 >> /tmp/.brain
+fi ;
+
+
+if test $1 = "-s" ; then
+	grep $2 /tmp/.brain
+fi ;
+
+
+if [ "$1" = "-d" ]; then
+    while IFS= read -r line; do
+        ladate=$(echo "$line" | cut -d: -f1)
+        dateINT=$(expr $ladate)
+        echo $dateINT
+	echo $2
+        if [ "$dateINT" -ge "$2" ]; then
+            echo "$line" >> /tmp/.brain2
+	fi
+    done < /tmp/.brain
+    rm -f /tmp/.brain
+    mv /tmp/.brain2 /tmp/.brain
+fi

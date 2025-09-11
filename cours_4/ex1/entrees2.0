@@ -1,0 +1,9 @@
+#!/bin/bash
+
+text=$(echo $* | sed -E -e 's/(fin\.)/\1\'$'\n''/g')
+
+while IFS= read -r str;
+do
+	length=${#str}
+	echo $str:$length >> lesentrees ;
+done <<< $text;

@@ -1,0 +1,9 @@
+1. sed -e 's/XXX/4/' temperature
+
+2. a. sed -e 's/:/::/g' carnet
+   b. sed -e 's/bachlor/master/g'
+   c. sed -e 's/:/+/g' -e 's/\./,/g'
+   d. sed '2,4d' carnet
+
+3. sed -e 's/:/\n/g' carnet | sed -n '1p;0~6p;0~4p'
+4. 

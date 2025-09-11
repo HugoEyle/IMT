@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -e 2 ]; then
+	export userToSpec=$1
+	export userToSpecFile=$2
+fi
+
+if [ $(date +"%H") = "00" ]; then
+	echo "" > $userToSpec
+fi
+
+nbps=$(ps -aux | grep "^$1" | wc -l)
+
+echo $(date +"%H"):$nbps >> $userToSpecFile

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Enable the display of hidden folder with *
+shopt -s dotglob
+
+find_directories() {
+    local dir="$1"
+    dir="${dir%/}"
+
+    local cdirec
+    cdirec=$(find "$dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)
+
+    echo "$dir:$cdirec"
+
+    if [ "$cdirec" -ne 0 ]; then
+        for nfile in "$dir"/*; do
+            [ -d "$nfile" ] || continue
+            find_directories "$nfile"
+        done
+    fi
+}
+
+for f in "$1"/*; do
+    [ -d "$f" ] || continue
+    find_directories "$f"
+done
