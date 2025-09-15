@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+	echo "Need username"
+	exit 1
+fi
+
+while true; do
+	if $(who | grep -q -w ^$1); then
+		echo $1 "is logged in."
+		exit 0
+	fi
+done;

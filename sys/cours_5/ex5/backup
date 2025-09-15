@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Archive a file in tar gz and send it to another pc if the command succeed
+archive () {
+	local user="toto"
+	local ip="0.0.0.0"
+
+	echo $1
+	local nameOfFile=$(echo $1 | grep -o -E "(\/.[^\/]+)$" | sed -e "s/\///g")
+	local day=$(date +"%d")
+	echo $nameOfFile
+	tar -czvf $nameOfFile-$day.tar.gz $1
+
+	if [ $? -eq 0 ]; then
+		scp -r $nameOfFile-$day.tar.gz $user@$ip
+	fi
+}
+
+
+pathToFile=""
+
+# Check if an argument is passed if not, ask for it
+if [ $# -ne 1 ]; then
+	echo Invalid directory
+	read -r $pathToFile
+else
+	pathToFile=$(echo $1)
+fi
+
+
+# While the path prompt is not a directory ask for the path
+while ! [ -d "$pathToFile" ]; do
+	read -rp "Enter directory path: " pathToFile
+done
+
+archive $pathToFile
